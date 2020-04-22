@@ -1,0 +1,1 @@
+web: gunicorn Strezy.wsgi --log-file -
