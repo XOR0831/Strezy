@@ -1,7 +1,6 @@
 from django.shortcuts import render
 import numpy as np
 import joblib
-import cv2
 import tensorflow as tf
 from django.core.files.storage import default_storage
 
