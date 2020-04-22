@@ -3,3 +3,4 @@ gunicorn==19.6.0
 whitenoise==3.2
 tensorflow==1.14
 joblib
+scikit-learn
