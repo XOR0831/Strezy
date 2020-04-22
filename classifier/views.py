@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.http import JsonResponse
 import numpy as np
 import joblib
 import tensorflow as tf
@@ -25,5 +25,9 @@ def predict(request):
     img = np.expand_dims(img, axis=0)
     img_features = model_features_extractor.predict(img)
     result = svm_model.predict(img_features)
+
+    data = {
+        'result': str(LABELS[result[0]])
+    }
     
-    return LABELS[result[0]]
+    return JsonResponse(data)
