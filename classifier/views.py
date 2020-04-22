@@ -12,7 +12,7 @@ model_features_extractor = tf.keras.models.Model(inputs=model.input, outputs=mod
 svm_model = joblib.load('./classifier/svm_rbf_2020-04-21 17_08_26.741869')
 # Create your views here.
 
-
+@csrf_exempt 
 def predict(request):
     file_upload = request.FILES['image'] 
     img_name = "pic.jpg"
