@@ -4,6 +4,7 @@ import joblib
 import tensorflow as tf
 from django.core.files.storage import default_storage
 from django.views.decorators.csrf import csrf_exempt
+from PIL import Image
 
 LABELS = ['Bacterial Blight', 'Septorial Brown Spot', 'Frogeye Leaf Spot', 'Healthy', 'Herbicide Injury', 
           'Iron Deficiency Chlorosis', 'Potassium Deficiency', 'Bacterial Pustule', 'Sudden Death Syndrome']
