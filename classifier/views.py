@@ -7,9 +7,9 @@ from django.core.files.storage import default_storage
 LABELS = ['Bacterial Blight', 'Septorial Brown Spot', 'Frogeye Leaf Spot', 'Healthy', 'Herbicide Injury', 
           'Iron Deficiency Chlorosis', 'Potassium Deficiency', 'Bacterial Pustule', 'Sudden Death Syndrome']
 
-model = tf.keras.models.load_model('model_Monday-09-02-2019-17-36-12')
+model = tf.keras.models.load_model('./model_Monday-09-02-2019-17-36-12')
 model_features_extractor = tf.keras.models.Model(inputs=model.input, outputs=model.get_layer("GlobalAveragePooling2D_1").output)
-svm_model = joblib.load('svm_rbf_2020-04-21 17_08_26.741869')
+svm_model = joblib.load('./svm_rbf_2020-04-21 17_08_26.741869')
 # Create your views here.
 
 
