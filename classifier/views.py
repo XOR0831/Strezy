@@ -3,6 +3,7 @@ import numpy as np
 import joblib
 import tensorflow as tf
 from django.core.files.storage import default_storage
+from django.views.decorators.csrf import csrf_exempt
 
 LABELS = ['Bacterial Blight', 'Septorial Brown Spot', 'Frogeye Leaf Spot', 'Healthy', 'Herbicide Injury', 
           'Iron Deficiency Chlorosis', 'Potassium Deficiency', 'Bacterial Pustule', 'Sudden Death Syndrome']
