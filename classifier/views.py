@@ -19,9 +19,8 @@ def predict(request):
     img_name = "pic.jpg"
     img_name_saved = default_storage.save(img_name, file_upload)
     img_path = default_storage.url(img_name_saved)
-    img = cv2.imread(img_path)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img = cv2.resize(img, dsize=(64, 64), interpolation=cv2.INTER_AREA)
+    img = tf.keras.preprocessing.image.load_img(img_path, target_size=(64, 64))
+    img = tf.keras.preprocessing.image.img_to_array(img)
     img = np.expand_dims(img, axis=0)
     img_features = model_features_extractor.predict(img)
     result = svm_model.predict(img_features)
