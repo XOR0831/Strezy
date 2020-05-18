@@ -25,7 +25,6 @@ def predict(request):
     img = tf.keras.preprocessing.image.img_to_array(img)
     img = np.expand_dims(img, axis=0)
     detection = model_binary.predict(img)
-    detection = np.argmax(detection, axis=1)[0]
     print(detection)
     if detection == 1:
         img_features = model_features_extractor.predict(img)
