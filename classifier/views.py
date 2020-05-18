@@ -21,13 +21,10 @@ def predict(request):
     img_name = "pic.jpg"
     img_name_saved = default_storage.save(img_name, file_upload)
     img_path = default_storage.url(img_name_saved)
-    img_bin = tf.keras.preprocessing.image.load_img(img_path, target_size=(256, 256))
-    img_bin = tf.keras.preprocessing.image.img_to_array(img_bin)
-    img_bin = np.expand_dims(img_bin, axis=0)
     img = tf.keras.preprocessing.image.load_img(img_path, target_size=(64, 64))
     img = tf.keras.preprocessing.image.img_to_array(img)
     img = np.expand_dims(img, axis=0)
-    detection = model_binary.predict(img_bin)
+    detection = model_binary.predict(img)
     detection = np.argmax(detection, axis=1)[0]
     print(detection)
     if detection == 1:
