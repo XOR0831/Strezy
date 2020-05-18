@@ -24,7 +24,7 @@ def predict(request):
     img = tf.keras.preprocessing.image.load_img(img_path, target_size=(64, 64))
     img = tf.keras.preprocessing.image.img_to_array(img)
     img = np.expand_dims(img, axis=0)
-    detection = model_binary.predict(img)
+    detection = int(model_binary.predict(img)[0][0])
     print(detection)
     if detection == 1:
         img_features = model_features_extractor.predict(img)
