@@ -23,7 +23,7 @@ def predict(request):
     img_path = default_storage.url(img_name_saved)
     img_bin = tf.keras.preprocessing.image.load_img(img_path, target_size=(256, 256))
     img_bin = tf.keras.preprocessing.image.img_to_array(img_bin)
-    img_bin = np.expand_dims(img, axis=0)
+    img_bin = np.expand_dims(img_bin, axis=0)
     img = tf.keras.preprocessing.image.load_img(img_path, target_size=(64, 64))
     img = tf.keras.preprocessing.image.img_to_array(img)
     img = np.expand_dims(img, axis=0)
