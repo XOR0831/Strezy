@@ -29,6 +29,7 @@ def predict(request):
     img = np.expand_dims(img, axis=0)
     detection = model_binary.predict(img_bin)
     detection = np.argmax(detection, axis=1)
+    print(detection)
     if detection == 1:
         img_features = model_features_extractor.predict(img)
         result = svm_model.predict(img_features)
