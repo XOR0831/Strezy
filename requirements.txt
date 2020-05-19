@@ -7,3 +7,4 @@ scikit-learn==0.22.2
 pillow
 dj-database-url
 python-decouple
+psycopg2
