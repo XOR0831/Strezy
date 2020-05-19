@@ -51,6 +51,6 @@ def predict(request):
 def show_history(request):
     history = History.objects.all()
     data = {
-        'history': history
+        'history': list(history)
     }
     return JsonResponse(data)
