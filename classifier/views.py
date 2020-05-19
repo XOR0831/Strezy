@@ -49,7 +49,7 @@ def predict(request):
 
 @csrf_exempt
 def show_history(request):
-    history = History.objects.all()
+    history = History.objects.order_by('-datetime').values('id', 'title', 'datetime')
     data = {
         'history': list(history)
     }
