@@ -5,6 +5,7 @@ import tensorflow as tf
 from django.core.files.storage import default_storage
 from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
+from .models import History
 
 LABELS = ['Bacterial Blight', 'Septorial Brown Spot', 'Frogeye Leaf Spot', 'Healthy', 'Herbicide Injury', 
           'Iron Deficiency Chlorosis', 'Potassium Deficiency', 'Bacterial Pustule', 'Sudden Death Syndrome']
@@ -29,7 +30,10 @@ def predict(request):
     if detection == 1:
         img_features = model_features_extractor.predict(img)
         result = svm_model.predict(img_features)
-
+        history = History(
+            title=str(LABELS[result[0]])
+        )
+        history.save()
         data = {
             'leaf': True,
             'class': str(LABELS[result[0]])
@@ -40,4 +44,13 @@ def predict(request):
             'class': None
         }
     
+    return JsonResponse(data)
+
+
+@csrf_exempt
+def show_history(request):
+    history = History.objects.all()
+    data = {
+        'history': history
+    }
     return JsonResponse(data)
