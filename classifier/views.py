@@ -86,8 +86,6 @@ def predict_class_only(request):
     history.save()
     data = {
         'leaf': True,
-        'types': types,
-        'description': str(DESCRIPTION[result[0]]),
         'class': str(LABELS[result[0]])
     }
     
