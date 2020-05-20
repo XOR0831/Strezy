@@ -52,15 +52,11 @@ def predict(request):
         history.save()
         data = {
             'leaf': True,
-            'types': types,
-            'description': str(DESCRIPTION[result[0]]),
             'class': str(LABELS[result[0]])
         }
     else:
         data = {
             'leaf': False,
-            'types': None,
-            'description': None,
             'class': None
         }
     
