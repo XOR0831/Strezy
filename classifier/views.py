@@ -9,6 +9,16 @@ from .models import History
 
 LABELS = ['Bacterial Blight', 'Septorial Brown Spot', 'Frogeye Leaf Spot', 'Healthy', 'Herbicide Injury', 
           'Iron Deficiency Chlorosis', 'Potassium Deficiency', 'Bacterial Pustule', 'Sudden Death Syndrome']
+BIOTIC = ['Bacterial Blight', 'Bacterial Pustule', 'Sudden Death Syndrome', 'Septorial Brown Spot', 'Frogeye Leaf Spot']
+DESCRIPTION = ['Lesions are angular shaped with reddish brown centers. Margins of disease spot surrounded by yellow halos. Lesions coalesce into larger irregularly shaped area that fall out.',
+               'Lesions are irregular-shaped and dark brown in color. Adjacent lesions grow together and form larger blotches which are darker than the lesions of other diseases',
+               'Lesions are circular with gray to light brown center with dark reddish-brown margins. Lesions diameter range from 1-5 mm.',
+               'Your Plant is Healthy!',
+               'Small brown specking to severe bronzing and bleaching.',
+               'Yellowing of interveinal areas of leaves, while the veins remain green. Later on, small brown specks on affected leaves.',
+               'Continuous yellow margin at the tip of the leaf. Yellowing is followed by necrosis',
+               'Lesions are small and surrounded by yellow halo and some lesions have pin-point brown spots. Small pustule lesions are located on the underside of the leaf.',
+               'Large irregularly shaped blotches of necrosis between the veins.']
 
 model_binary = tf.keras.models.load_model("./classifier/leaf_final.h5")
 model = tf.keras.models.load_model('./classifier/model_Monday-09-02-2019-17-36-12')
@@ -30,17 +40,27 @@ def predict(request):
     if detection == 1:
         img_features = model_features_extractor.predict(img)
         result = svm_model.predict(img_features)
+        if LABELS[result[0]] in BIOTIC:
+            types = "Biotic Stress"
+        else:
+            types = "Abiotic Stress"
         history = History(
-            title=str(LABELS[result[0]])
+            title=str(LABELS[result[0]]),
+            types=types,
+            description=str(DESCRIPTION[result[0]])
         )
         history.save()
         data = {
             'leaf': True,
+            'type': types,
+            'description': str(DESCRIPTION[result[0]]),
             'class': str(LABELS[result[0]])
         }
     else:
         data = {
             'leaf': False,
+            'type': None,
+            'description': None,
             'class': None
         }
     
