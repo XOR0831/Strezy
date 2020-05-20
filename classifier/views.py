@@ -52,17 +52,48 @@ def predict(request):
         history.save()
         data = {
             'leaf': True,
-            'type': types,
+            'types': types,
             'description': str(DESCRIPTION[result[0]]),
             'class': str(LABELS[result[0]])
         }
     else:
         data = {
             'leaf': False,
-            'type': None,
+            'types': None,
             'description': None,
             'class': None
         }
+    
+    return JsonResponse(data)
+
+
+@csrf_exempt 
+def predict_class_only(request):
+    file_upload = request.FILES['image'] 
+    img_name = "pic.jpg"
+    img_name_saved = default_storage.save(img_name, file_upload)
+    img_path = default_storage.url(img_name_saved)
+    img = tf.keras.preprocessing.image.load_img(img_path, target_size=(64, 64))
+    img = tf.keras.preprocessing.image.img_to_array(img)
+    img = np.expand_dims(img, axis=0)
+    img_features = model_features_extractor.predict(img)
+    result = svm_model.predict(img_features)
+    if LABELS[result[0]] in BIOTIC:
+        types = "Biotic Stress"
+    else:
+        types = "Abiotic Stress"
+    history = History(
+        title=str(LABELS[result[0]]),
+        types=types,
+        description=str(DESCRIPTION[result[0]])
+    )
+    history.save()
+    data = {
+        'leaf': True,
+        'types': types,
+        'description': str(DESCRIPTION[result[0]]),
+        'class': str(LABELS[result[0]])
+    }
     
     return JsonResponse(data)
 
